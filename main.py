@@ -15,14 +15,14 @@ from Xuan_code.final.mac_network_2022 import Protein_Crystallization
 from sklearn import metrics
 import math
 
-protein_char = ['A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'Y', '?']
+protein_char = ['A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'Y', 'U']
 MAX_SEQ_Protein = 1000
 
 def trans_drug(x):
 	temp = list(x)
 	temp = [i if i in protein_char else '?' for i in temp]
 	if len(temp) < MAX_SEQ_Protein:
-		temp = temp + ['?'] * (MAX_SEQ_Protein-len(temp))
+		temp = temp + ['0'] * (MAX_SEQ_Protein-len(temp))
 	else:
 		temp = temp [:MAX_SEQ_Protein]
 	return temp
@@ -81,7 +81,7 @@ class VAE(nn.Module):
     def forward(self, x):
         encoded = self.encoder(x)
         decoded = self.decoder(encoded)
-        return decoded, encoded # 重新参数化成正态分布
+        return decoded, encoded
 
 def fold_files(args):
     rawdata_dir = args.rawpath
@@ -144,7 +144,7 @@ def Generate_results(args):
         use_cuda = True
     device = torch.device("cuda" if use_cuda else "cpu")
 
-    config = {'max_protein_seq': 1000,  # 数据集中最大蛋白质长度
+    config = {'max_protein_seq': 1000,
               'emb_size': 100,
               'dropout_rate': 0.5,
               'input_dim_target': 21,

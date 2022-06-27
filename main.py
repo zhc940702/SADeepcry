@@ -46,11 +46,11 @@ def ReadMyCsv(SaveList, fileName):
         SaveList.append(row)
     return
 
-def read_fasta(input): #用def定义函数read_fasta()，并向函数传递参数用变量input接收
-    with open(input,'r') as f: # 打开文件
-        fasta = {} # 定义一个空的字典
+def read_fasta(input):
+    with open(input,'r') as f:
+        fasta = {} 
         for line in f:
-            line = line.strip() # 去除末尾换行符
+            line = line.strip()
             if line[0] == '>':
                 header = line[1:]
             else:
